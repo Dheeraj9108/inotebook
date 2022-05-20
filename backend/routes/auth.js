@@ -4,6 +4,7 @@ const User = require('../models/User');
 const {body,validationResult} = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const fetchuser = require("../middleware/fetchuser");
 
 const JWT_SECRET = "PooJaryd333heerajK91uma0816@107$7r";
 
@@ -26,8 +27,7 @@ router.post('/CreateUser',[
     }
     // res.send(req.body);
     //check weather user with this email exit already
-    try {
-        
+    try {   
     
     let user = await User.findOne({email : req.body.email});
     if(user){
@@ -100,5 +100,20 @@ router.post('/login',[
 })
 
 
+
+
+
+// rout3
+router.post('/getuser', fetchuser, async(req,res)=>{
+  
+try {
+    const userId = req.user.id;
+    const user = await User.findById(userId).select("-password");
+    res.send(user);
+} catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal Server Error") ;   
+}
+});
 
 module.exports = router
