@@ -1,12 +1,10 @@
 import React from 'react'
 
-const About = () => {
+
+export default function home() {
   return (
     <div>
-      This is about
+      This is home
     </div>
   )
 }
-
-export default About
-
