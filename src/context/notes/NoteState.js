@@ -1,7 +1,8 @@
+// import { useState } from "react";
 import { useState } from "react";
 import NotesContext from "./noteContex";
 
-const NoteState =(props)=>{
+const NoteState = (props) => {
     // const s1 = {
     //     "name":"dheeraj",
     //     "class":"6cs2"
@@ -15,10 +16,30 @@ const NoteState =(props)=>{
     //         })
     //     }, 1000);
     // }
-
+    const initialNotes = [
+        {
+            "_id": "6287af4f51ad6abbf362e34b",
+            "user": "62866f04da6a1811c07ce310",
+            "title": "mytitle",
+            "description": "hellow world",
+            "tag": "hellow",
+            "date": "2022-05-20T15:10:07.401Z",
+            "__v": 0
+        },
+        {
+            "_id": "628b900ff7c1bee1154614af",
+            "user": "62866f04da6a1811c07ce310",
+            "title": "mytitle kjajf",
+            "description": "hellow  ih world",
+            "tag": "hellow",
+            "date": "2022-05-23T13:45:51.172Z",
+            "__v": 0
+        }
+    ]
+    const [notes, setNotes] = useState(initialNotes)
     return (
-        <NotesContext.Provider value={{}}>
-           { props.children}
+        <NotesContext.Provider value={{ notes, setNotes }}>
+            {props.children}
         </NotesContext.Provider>
     )
 }
