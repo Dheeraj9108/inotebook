@@ -28,7 +28,7 @@ const Addnote = () => {
                     <input type="checkbox" className="form-check-input" id="exampleCheck1" />
                     <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
                 </div>
-                <button onClick={handleClick} type="submit" className="btn btn-primary">Submit</button>
+                <button onClick={handleClick} type="submit" className="btn btn-primary">Add Note</button>
             </form>
         </div>
     )
