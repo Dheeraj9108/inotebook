@@ -1,3 +1,6 @@
 .accordian-button::after{
     filter: invert(1);
 }
+i{
+    cursor: pointer;
+}

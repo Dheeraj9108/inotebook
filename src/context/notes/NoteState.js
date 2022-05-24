@@ -18,7 +18,7 @@ const NoteState = (props) => {
     // }
     const initialNotes = [
         {
-            "_id": "6287af4f51ad6abbf362e34b",
+            "_id": "6287af4f51ad6abbf362e34b1",
             "user": "62866f04da6a1811c07ce310",
             "title": "mytitle",
             "description": "hellow world",
@@ -27,7 +27,7 @@ const NoteState = (props) => {
             "__v": 0
         } ,
         {
-            "_id": "628b900ff7c1bee1154614af",
+            "_id": "628b900ff7c1bee1154614af2",
             "user": "62866f04da6a1811c07ce310",
             "title": "mytitle kjajf",
             "description": "hellow  ih world",
@@ -36,7 +36,7 @@ const NoteState = (props) => {
             "__v": 0
         },
         {
-            "_id": "628b900ff7c1bee1154614af",
+            "_id": "628b900ff7c1bee1154614af3",
             "user": "62866f04da6a1811c07ce310",
             "title": "mytitle kjajf",
             "description": "hellow  ih world",
@@ -45,7 +45,7 @@ const NoteState = (props) => {
             "__v": 0
         },
         {
-            "_id": "628b900ff7c1bee1154614af",
+            "_id": "628b900ff7c1bee1154614af4",
             "user": "62866f04da6a1811c07ce310",
             "title": "mytitle kjajf",
             "description": "hellow  ih world",
@@ -54,7 +54,7 @@ const NoteState = (props) => {
             "__v": 0
         },
         {
-            "_id": "628b900ff7c1bee1154614af",
+            "_id": "628b900ff7c1bee1154614af5",
             "user": "62866f04da6a1811c07ce310",
             "title": "mytitle kjajf",
             "description": "hellow  ih world",
@@ -64,7 +64,7 @@ const NoteState = (props) => {
 
         },
         {
-            "_id": "628b900ff7c1bee1154614af",
+            "_id": "628b900ff7c1bee1154614af6",
             "user": "62866f04da6a1811c07ce310",
             "title": "mytitle kjajf",
             "description": "hellow  ih world",
@@ -73,7 +73,7 @@ const NoteState = (props) => {
             "__v": 0
         },
         {
-            "_id": "628b900ff7c1bee1154614af",
+            "_id": "628b900ff7c1bee1154614af7",
             "user": "62866f04da6a1811c07ce310",
             "title": "mytitle kjajf",
             "description": "hellow  ih world",
