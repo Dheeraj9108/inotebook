@@ -3,6 +3,7 @@ import { useState } from "react";
 import NotesContext from "./noteContex";
 
 const NoteState = (props) => {
+    const host = 'http://localhost:5000'
     // const s1 = {
     //     "name":"dheeraj",
     //     "class":"6cs2"
@@ -16,79 +17,38 @@ const NoteState = (props) => {
     //         })
     //     }, 1000);
     // }
-    const initialNotes = [
-        {
-            "_id": "6287ijkaf4f51ad6abbf362e34b1",
-            "user": "62866f04da6a1811c07ce310",
-            "title": "mytitle",
-            "description": "hellow world",
-            "tag": "hellow",
-            "date": "2022-05-20T15:10:07.401Z",
-            "__v": 0
-        } ,
-        {
-            "_id": "628b900ff7c1bnj7ee1154614af2",
-            "user": "62866f04da6a1811c07ce310",
-            "title": "mytitle kjajf",
-            "description": "hellow  ih world",
-            "tag": "hellow",
-            "date": "2022-05-23T13:45:51.172Z",
-            "__v": 0
-        },
-        {
-            "_id": "628b900fg5ff7c1bee1154614af3",
-            "user": "62866f04da6a1811c07ce310",
-            "title": "mytitle kjajf",
-            "description": "hellow  ih world",
-            "tag": "hellow",
-            "date": "2022-05-23T13:45:51.172Z",
-            "__v": 0
-        },
-        {
-            "_id": "628b900ff7c1bee113v54614af4",
-            "user": "62866f04da6a1811c07ce310",
-            "title": "mytitle kjajf",
-            "description": "hellow  ih world",
-            "tag": "hellow",
-            "date": "2022-05-23T13:45:51.172Z",
-            "__v": 0
-        },
-        {
-            "_id": "628b90ccc0ff7c1bee1154614af5",
-            "user": "62866f04da6a1811c07ce310",
-            "title": "mytitle kjajf",
-            "description": "hellow  ih world",
-            "tag": "hellow",
-            "date": "2022-05-23T13:45:51.172Z",
-            "__v": 0
+    const initialNotes = []
 
-        },
-        {
-            "_id": "628b900ff7c1bee11e454614af6",
-            "user": "62866f04da6a1811c07ce310",
-            "title": "mytitle kjajf",
-            "description": "hellow  ih world",
-            "tag": "hellow",
-            "date": "2022-05-23T13:45:51.172Z",
-            "__v": 0
-        },
-        {
-            "_id": "628b900erff7c1bee1154614af7",
-            "user": "62866f04da6a1811c07ce310",
-            "title": "mytitle kjajf",
-            "description": "hellow  ih world",
-            "tag": "hellow",
-            "date": "2022-05-23T13:45:51.172Z",
-            "__v": 0
-        }
-    ]
+
     const [notes, setNotes] = useState(initialNotes)
 
+    const getNotes = async ()=>{
+        const response = await fetch(`${host}/api/notes/fetchallnotes`,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json',
+                'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjI4NjZmMDRkYTZhMTgxMWMwN2NlMzEwIn0sImlhdCI6MTY1MzA1MjkxN30.54uUDjdkHwb4flS4OlIkptt5NdtdXbnuZRaE4xtk2ZQ'
+            }
+        });
+        const json  = await response.json();
+        console.log(json[0]);
+        setNotes(json[0]);
+    } 
     // Add a note
-    const addNote =(title,description,tag)=>{
+    const addNote = async (title,description,tag)=>{
+        const response = await fetch(`${host}/api/notes/addnote`,{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json',
+                'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjI4NjZmMDRkYTZhMTgxMWMwN2NlMzEwIn0sImlhdCI6MTY1MzA1MjkxN30.54uUDjdkHwb4flS4OlIkptt5NdtdXbnuZRaE4xtk2ZQ'
+            },
+            body:JSON.stringify({title,description,tag})
+        });
+        const json =  await response.json();
+        console.log(json)
         console.log("Adding a new Object");
         const note = {
-            "_id": "628b900ff7c1bee115sd4614af7",
+            "_id": json._id,
             "user": "62866f04da6a1811c07ce310",
             "title": title,
             "description": description,
@@ -100,18 +60,44 @@ const NoteState = (props) => {
     } 
 
     // Delete a note
-    const deleteNote =(id)=>{
+    const deleteNote = async (id)=>{
+        const response = await fetch(`${host}/api/notes/deletenote/${id}`,{
+            method:'DELETE',
+            headers:{
+                'Content-Type':'application/json',
+                'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjI4NjZmMDRkYTZhMTgxMWMwN2NlMzEwIn0sImlhdCI6MTY1MzA1MjkxN30.54uUDjdkHwb4flS4OlIkptt5NdtdXbnuZRaE4xtk2ZQ'
+            }
+        });
+        const json = await response.json();
+        console.log(json);
         console.log("Deleting the note with id"+id);
         const newNote = notes.filter((note)=>{return note._id!==id})
         setNotes(newNote);
     }
     // Edit a note
-    const editNote =()=>{
-
+    const editNote = async (id,title,description,tag)=>{
+        const response = await fetch(`${host}/api/notes/updatenote/${id}`,{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json',
+                'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjI4NjZmMDRkYTZhMTgxMWMwN2NlMzEwIn0sImlhdCI6MTY1MzA1MjkxN30.54uUDjdkHwb4flS4OlIkptt5NdtdXbnuZRaE4xtk2ZQ'
+            },
+            body:JSON.stringify({title,description,tag})
+        });
+        const json =  response.json();
+        console.log(json)
+        for (let index = 0; index < notes.length; index++) {
+            const element = notes[index];
+            if(element._id === id){
+                element.title = title;
+                element.description = description;
+                element.tag = tag;
+            }
+        }
     }
 
     return (
-        <NotesContext.Provider value={{ notes, addNote, deleteNote,editNote}}>
+        <NotesContext.Provider value={{ notes, addNote, deleteNote,editNote,getNotes}}>
             {props.children}
         </NotesContext.Provider>
     )
