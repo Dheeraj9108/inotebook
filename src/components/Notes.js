@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useRef,useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import noteContext from "../context/notes/noteContex";
 import Noteitem from './Noteitem';
 import Addnote from './Addnote';
 
 const Notes = () => {
     const context = useContext(noteContext);
-    const { notes, getNotes , editNote} = context;
+    const { notes, getNotes, editNote } = context;
     useEffect(() => {
         getNotes();
         // eslint-disable-next-line 
@@ -14,24 +14,25 @@ const Notes = () => {
     const ref = useRef(null);
     const refClose = useRef(null);
 
-    const [note,setNote] = useState({eid:"",etitle:"",edescription:"",etag:""});
-    
+    const [note, setNote] = useState({ eid: "", etitle: "", edescription: "", etag: "" });
+
     const updateNote = (currentNote) => {
         ref.current.click();
-        setNote({eid:currentNote._id,etitle:currentNote.title,edescription:currentNote.description,etag:currentNote.tag});
+        setNote({ eid: currentNote._id, etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag });
+        
     }
-    
 
 
-    const handleClick=(e)=>{
-        console.log("updating the note",note);
+
+    const handleClick = (e) => {
+        console.log("updating the note", note);
         e.preventDefault();
-        editNote(note.eid,note.etitle,note.edescription,note.etag);
+        editNote(note.eid, note.etitle, note.edescription, note.etag);
         refClose.current.click();
         // addNote(note.title,note.description,note.tag);
     }
-    const onChange=(e)=>{
-        setNote({...note,[e.target.name]:e.target.value})
+    const onChange = (e) => {
+        setNote({ ...note, [e.target.name]: e.target.value })
     }
     return (
         <>
@@ -53,28 +54,31 @@ const Notes = () => {
                             <form className='my-3'>
                                 <div className="mb-3">
                                     <label htmlFor="etitle" className="form-label">Title</label>
-                                    <input type="text" className="form-control" id="etitle" name="etitle" aria-describedby="emailHelp" value={note.etitle}onChange={onChange} />
+                                    <input type="text" className="form-control" id="etitle" name="etitle" aria-describedby="emailHelp" value={note.etitle} onChange={onChange} minLength={5} required/>
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="edescription" className="form-label">Description</label>
-                                    <input type="text" className="form-control" id="edescription" name="edescription" value={note.edescription}onChange={onChange} />
+                                    <input type="text" className="form-control" id="edescription" name="edescription" value={note.edescription} onChange={onChange} minLength={5} required/>
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="etag" className="form-label">Tag</label>
-                                    <input type="text" className="form-control" id="etag" name="etag" value={note.etag}onChange={onChange} />
+                                    <input type="text" className="form-control" id="etag" name="etag" value={note.etag} onChange={onChange} />
                                 </div>
-                               
+
                             </form>
                         </div>
                         <div className="modal-footer">
                             <button ref={refClose} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button onClick={handleClick} type="button" className="btn btn-primary">Update Note</button>
+                            <button disabled ={note.etitle.length<5 || note.edescription.length<5}onClick={handleClick} type="button" className="btn btn-primary">Update Note</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="row my-3">
                 <h2>Your Notes</h2>
+                <div className="conatiner">
+                    {notes.length === 0 && "Mo notes to display"}
+                </div>
                 {notes.map((note) => {
                     return <Noteitem key={note._id} updateNote={updateNote} note={note} />
                 })}
