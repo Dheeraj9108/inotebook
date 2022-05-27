@@ -11,7 +11,7 @@ const Navbar = () => {
     }, [location]);
     const handleLogout =()=>{
         localStorage.removeItem('token');
-        alert('Loged out Sucsessfully');
+       
         history('/login');
     }
     return (
