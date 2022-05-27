@@ -2,12 +2,18 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import noteContext from "../context/notes/noteContex";
 import Noteitem from './Noteitem';
 import Addnote from './Addnote';
+import {useNavigate} from 'react-router-dom';
 
-const Notes = () => {
+const Notes = (props) => {
     const context = useContext(noteContext);
     const { notes, getNotes, editNote } = context;
+    let history = useNavigate();
     useEffect(() => {
-        getNotes();
+        if(localStorage.getItem('token')){
+            getNotes();
+        }else{
+            history('/login');
+        }
         // eslint-disable-next-line 
     }, [])
 
@@ -18,8 +24,7 @@ const Notes = () => {
 
     const updateNote = (currentNote) => {
         ref.current.click();
-        setNote({ eid: currentNote._id, etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag });
-        
+        setNote({ eid: currentNote._id, etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag });   
     }
 
 
@@ -29,6 +34,7 @@ const Notes = () => {
         e.preventDefault();
         editNote(note.eid, note.etitle, note.edescription, note.etag);
         refClose.current.click();
+        props.showAlert("Updated Successfully",'success');
         // addNote(note.title,note.description,note.tag);
     }
     const onChange = (e) => {
@@ -36,7 +42,7 @@ const Notes = () => {
     }
     return (
         <>
-            <Addnote />
+            <Addnote showAlert={props.showAlert} />
 
             <button ref={ref} type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Launch demo modal
@@ -69,7 +75,7 @@ const Notes = () => {
                         </div>
                         <div className="modal-footer">
                             <button ref={refClose} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button disabled ={note.etitle.length<5 || note.edescription.length<5}onClick={handleClick} type="button" className="btn btn-primary">Update Note</button>
+                            <button disabled ={note.etitle.length<5 || note.edescription.length<5} onClick={handleClick} type="button" className="btn btn-primary">Update Note</button>
                         </div>
                     </div>
                 </div>
@@ -80,7 +86,7 @@ const Notes = () => {
                     {notes.length === 0 && "Mo notes to display"}
                 </div>
                 {notes.map((note) => {
-                    return <Noteitem key={note._id} updateNote={updateNote} note={note} />
+                    return <Noteitem key={note._id} showAlert={props.showAlert} updateNote={updateNote} note={note} />
                 })}
             </div>
         </>
